@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from "typeorm";
+import { EntityRepository, FindOneOptions, Repository } from "typeorm";
 import { User } from "./user.entity";
 import { AuthCredentialDto } from "./dto/auto-credential.dto";
 import { ConflictException, InternalServerErrorException } from "@nestjs/common";
@@ -9,9 +9,9 @@ export class UserRepository extends Repository<User>
 {
     async singUp( authCredentialDto:AuthCredentialDto):Promise<void>
     {
-        const {userName,password}=authCredentialDto
+        const {username,password}=authCredentialDto
         const user=new User()
-        user.username=userName
+        user.username=username
         user.salt=await bcrypt.genSalt()
         user.password=await this.hashPassword(password, user.salt)
         
@@ -29,6 +29,22 @@ export class UserRepository extends Repository<User>
     private async hashPassword(password:string, salt:string):Promise<string>
     {
         return bcrypt.hash(password,salt)
+    }
+
+    async validateUserPassword(authCredentialDto:AuthCredentialDto):Promise<string>
+    {   console.log("validate password",authCredentialDto);
+    
+        const {username,password}=authCredentialDto
+        const user = await this.findOne({ username } as FindOneOptions<User>);
+
+        if(user && await user.validatePassword(password))
+        {
+            return user.username;
+        }
+        else
+        {
+            return null;
+        }
     }
 }
 

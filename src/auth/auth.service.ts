@@ -15,4 +15,12 @@ export class AuthService {
     {
         return this.userRepository.singUp(authCredentialDto)
     }
+
+    async signIn(authCredentialDto:AuthCredentialDto):Promise<void>
+    {   console.log("servoce:",authCredentialDto);
+    
+        const result= await this.userRepository.validateUserPassword(authCredentialDto);
+        console.log(result);
+        
+    }
 }

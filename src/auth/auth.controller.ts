@@ -13,4 +13,11 @@ export class AuthController {
     {        
         return this.authService.signUp(authCredentialDto)        
     }
+
+    @Post('/signin')
+    signIn(@Body(ValidationPipe) authCredentialDto:AuthCredentialDto)
+    {   console.log("controller",authCredentialDto);
+    
+        return this.authService.signIn(authCredentialDto);
+    }
 }
