@@ -10,6 +10,7 @@ export class UserRepository extends Repository<User>
     async singUp( authCredentialDto:AuthCredentialDto):Promise<void>
     {
         const {username,password}=authCredentialDto
+        
         const user=new User()
         user.username=username
         user.salt=await bcrypt.genSalt()
