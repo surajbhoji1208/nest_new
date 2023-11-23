@@ -19,4 +19,6 @@ export class Task extends BaseEntity{
     @ManyToOne(type => User,user=>user.tasks,{eager:false})
     user:User
 
+    @Column()   //for retrive task based on the user
+    userId:number
 };
