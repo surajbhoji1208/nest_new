@@ -53,13 +53,14 @@ export class TasksService {
     //     this.task=this.task.filter(task=>task.id!=found.id)
     // }
 
-    async updateTaskById(id:number,status:TaskStatus):Promise<Task>
+    /*async updateTaskById(id:number,status:TaskStatus):Promise<Task>
     {
         const task= await this.getTaskById(id)
         task.status=status
         await task.save()
         return task
-    }
+    }*/
+
     // updateTaskById(id:string,status:TaskStatus):Task{
     //     const task=this.getTaskById(id)
     //     console.log(task);
@@ -83,8 +84,8 @@ export class TasksService {
     //     return task
     // }
 
-    async getTaskById(id:number):Promise<Task>{
-        const found=await this.TaskRepository.findOne(id)
+    async getTaskById(id:number, user:User):Promise<Task>{
+        const found=await this.TaskRepository.findOne({where: {id,userId:user.id}})
         if(!found)
         {
             throw new NotFoundException("nahi mila")
