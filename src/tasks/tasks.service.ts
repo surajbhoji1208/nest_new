@@ -53,13 +53,13 @@ export class TasksService {
     //     this.task=this.task.filter(task=>task.id!=found.id)
     // }
 
-    /*async updateTaskById(id:number,status:TaskStatus):Promise<Task>
+    async updateTaskById(id:number,status:TaskStatus,user:User):Promise<Task>
     {
-        const task= await this.getTaskById(id)
+        const task= await this.getTaskById(id,user)
         task.status=status
         await task.save()
         return task
-    }*/
+    }
 
     // updateTaskById(id:string,status:TaskStatus):Task{
     //     const task=this.getTaskById(id)
